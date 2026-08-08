@@ -1,0 +1,307 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    --page-bg: #30364f;
+    --surface-dark: rgba(34, 40, 58, 0.96);
+    --surface-medium: rgba(44, 52, 74, 0.92);
+    --surface-soft: rgba(172, 186, 196, 0.12);
+    --text: #f0f0db;
+    --text-muted: #d7cfb1;
+    --border: rgba(225, 217, 188, 0.18);
+    --border-strong: rgba(225, 217, 188, 0.35);
+    --accent: #f18d3e;
+    --accent-soft: #e1d9bc;
+    --accent-hover: #f29949;
+    --shadow: 0 24px 60px rgba(15, 23, 42, 0.24);
+    --cursor-uri: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='26' height='26' viewBox='0 0 26 26'%3E%3Ccircle cx='13' cy='13' r='10' fill='%23f18d3e' stroke='%23222b42' stroke-width='2'/%3E%3Cpath d='M9 8 L17 13 L10 18 Z' fill='%23ffffff' opacity='0.95'/%3E%3C/svg%3E") 13 13, auto;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    font-family: var(--font-sans);
+    background: radial-gradient(circle at top left, rgba(225, 217, 188, 0.16), transparent 28%),
+      linear-gradient(180deg, #283046 0%, #30364f 42%, #21273a 100%);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    cursor: var(--cursor-uri);
+  }
+
+  #root {
+    min-height: 100vh;
+    background: transparent;
+  }
+
+  button,
+  a,
+  input,
+  textarea,
+  select {
+    transition: background-color 0.25s ease, color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  ::selection {
+    background: rgba(241, 141, 62, 0.22);
+    color: #111827;
+  }
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(circle at top right, rgba(241, 141, 62, 0.08), transparent 18%),
+    radial-gradient(circle at bottom left, rgba(225, 217, 188, 0.08), transparent 16%);
+  z-index: 0;
+}
+
+.app-shell {
+  background: transparent;
+  color: var(--text);
+}
+
+.edgeqc-panel {
+  background: var(--surface-medium);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+}
+
+.edgeqc-header {
+  background: var(--surface-dark);
+  border-color: var(--border);
+  box-shadow: inset 0 -1px 0 rgba(225, 217, 188, 0.08);
+}
+
+.edgeqc-sidebar {
+  background: rgba(29, 36, 54, 0.95);
+  border-color: var(--border);
+}
+
+.edgeqc-button {
+  background: rgba(44, 52, 74, 0.82);
+  color: var(--text);
+  border: 1px solid rgba(172, 186, 196, 0.14);
+}
+
+.edgeqc-button:hover,
+.edgeqc-button:focus-visible {
+  background: rgba(241, 141, 62, 0.14);
+  color: #fff;
+}
+
+.edgeqc-pill {
+  background: rgba(241, 141, 62, 0.14);
+  color: var(--accent);
+}
+
+.edgeqc-text-muted {
+  color: var(--text-muted);
+}
+
+.edgeqc-glow {
+  box-shadow: 0 14px 40px rgba(241, 141, 62, 0.14);
+}
+
+.edgeqc-brand-badge {
+  background: linear-gradient(135deg, #f18d3e 0%, #f5a564 100%);
+}
+
+.edgeqc-card {
+  background: rgba(34, 40, 58, 0.92);
+  border: 1px solid rgba(172, 186, 196, 0.12);
+}
+
+html.dark .bg-white,
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-slate-200,
+html.dark .bg-slate-300,
+html.dark .bg-slate-400,
+html.dark .bg-slate-500 {
+  background-color: rgba(34, 40, 58, 0.92) !important;
+  color: var(--text) !important;
+}
+
+html.dark .bg-amber-50,
+html.dark .bg-emerald-50,
+html.dark .bg-cyan-50,
+html.dark .bg-blue-50,
+html.dark .bg-purple-50,
+html.dark .bg-red-50,
+html.dark .bg-rose-50 {
+  background-color: rgba(241, 141, 62, 0.08) !important;
+}
+
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-300,
+html.dark .border-slate-400,
+html.dark .border-slate-500,
+html.dark .border-slate-600,
+html.dark .border-slate-700,
+html.dark .border-slate-800,
+html.dark .border-slate-900,
+html.dark .border-emerald-100,
+html.dark .border-emerald-200,
+html.dark .border-emerald-300,
+html.dark .border-amber-200,
+html.dark .border-amber-300,
+html.dark .border-cyan-200,
+html.dark .border-cyan-300,
+html.dark .border-blue-200,
+html.dark .border-purple-200 {
+  border-color: rgba(225, 217, 188, 0.16) !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-slate-500,
+html.dark .text-slate-400,
+html.dark .text-slate-300 {
+  color: var(--text) !important;
+}
+
+html.dark .text-emerald-600,
+html.dark .text-emerald-700,
+html.dark .text-emerald-800,
+html.dark .text-emerald-900,
+html.dark .text-cyan-300,
+html.dark .text-cyan-400,
+html.dark .text-amber-400,
+html.dark .text-amber-500,
+html.dark .text-blue-800,
+html.dark .text-purple-300,
+html.dark .text-purple-400,
+html.dark .text-red-800,
+html.dark .text-rose-400 {
+  color: var(--text) !important;
+}
+
+html.dark .bg-emerald-100,
+html.dark .bg-emerald-200,
+html.dark .bg-amber-100,
+html.dark .bg-cyan-500\/10,
+html.dark .bg-cyan-500\/20,
+html.dark .bg-purple-950,
+html.dark .bg-blue-100,
+html.dark .bg-red-100,
+html.dark .bg-rose-500\/20 {
+  background-color: rgba(34, 40, 58, 0.88) !important;
+}
+
+html.dark .bg-white,
+html.dark .bg-slate-50,
+html.dark .bg-slate-100,
+html.dark .bg-slate-200,
+html.dark .bg-slate-300 {
+  background-color: rgba(172, 186, 196, 0.08) !important;
+}
+
+html.dark .bg-slate-800,
+html.dark .bg-slate-900,
+html.dark .bg-slate-950,
+html.dark .bg-slate-700 {
+  background-color: rgba(34, 40, 58, 0.92) !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-800,
+html.dark .text-slate-700 {
+  color: var(--text) !important;
+}
+
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-slate-50\/80:hover,
+html.dark .hover\:bg-slate-100:hover,
+html.dark .hover\:bg-slate-100\/90:hover,
+html.dark .hover\:bg-slate-100\/80:hover {
+  background-color: rgba(241, 141, 62, 0.08) !important;
+}
+
+html.dark .hover\:text-slate-900:hover,
+html.dark .hover\:text-slate-800:hover,
+html.dark .hover\:text-slate-700:hover,
+html.dark .hover\:text-slate-600:hover,
+html.dark .hover\:text-slate-500:hover,
+html.dark .hover\:text-slate-400:hover {
+  color: var(--text) !important;
+}
+
+html.dark .text-slate-600,
+html.dark .text-slate-500,
+html.dark .text-slate-400,
+html.dark .text-slate-300 {
+  color: rgba(240, 240, 219, 0.75) !important;
+}
+
+html.dark .border-slate-200,
+html.dark .border-slate-300,
+html.dark .border-slate-400,
+html.dark .border-slate-500,
+html.dark .border-slate-600,
+html.dark .border-slate-700,
+html.dark .border-slate-800,
+html.dark .border-slate-900 {
+  border-color: rgba(225, 217, 188, 0.16) !important;
+}
+
+html.dark .shadow-sm,
+html.dark .shadow,
+html.dark .shadow-xl,
+html.dark .shadow-2xl,
+html.dark .shadow-xs {
+  box-shadow: 0 10px 28px rgba(15, 23, 42, 0.18) !important;
+}
+
+html.dark .text-emerald-600,
+html.dark .text-emerald-700,
+html.dark .text-emerald-800,
+html.dark .text-emerald-900,
+html.dark .bg-emerald-100,
+html.dark .bg-emerald-200,
+html.dark .bg-emerald-300,
+html.dark .bg-emerald-400,
+html.dark .bg-emerald-500,
+html.dark .bg-emerald-600 {
+  color: var(--text) !important;
+  background-color: rgba(172, 186, 196, 0.1) !important;
+}
+
+html.dark .bg-cyan-500,
+html.dark .bg-cyan-500\/10,
+html.dark .border-cyan-500\/30,
+html.dark .text-cyan-400,
+html.dark .text-cyan-300,
+html.dark .bg-cyan-500\/20 {
+  color: var(--text) !important;
+  background-color: rgba(172, 186, 196, 0.08) !important;
+}
+
+html.dark .bg-amber-500,
+html.dark .bg-amber-100,
+html.dark .text-amber-400,
+html.dark .bg-amber-950,
+html.dark .border-amber-500\/40 {
+  color: var(--text) !important;
+  background-color: rgba(241, 141, 62, 0.12) !important;
+}
+
+.edgeqc-border-soft {
+  border-color: rgba(225, 217, 188, 0.14);
+}
+
+.edgeqc-text-strong {
+  color: #fff;
+}
+
+.edgeqc-text-accent {
+  color: var(--accent);
+}
