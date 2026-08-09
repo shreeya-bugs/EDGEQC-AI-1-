@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Eye,
@@ -20,6 +20,7 @@ import { useInspection } from '../../context/InspectionContext';
 export const Sidebar: React.FC = () => {
   const { role, activeJob } = useInspection();
   const location = useLocation();
+  const navigate = useNavigate();
 
   const getNavItems = () => {
     switch (role) {
@@ -106,6 +107,10 @@ export const Sidebar: React.FC = () => {
                   <NavLink
                     key={item.path}
                     to={item.path}
+                    onClick={(e) => {
+                      e.preventDefault();
+                      navigate(item.path);
+                    }}
                     className={`flex items-center justify-between px-3 py-2 rounded-md text-xs font-medium transition-colors ${
                       isActive
                         ? 'bg-[rgba(241,141,62,0.18)] text-white font-semibold shadow-sm'

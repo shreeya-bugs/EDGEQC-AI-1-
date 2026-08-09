@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Camera,
   UserCheck,
@@ -20,6 +21,7 @@ import { MOCK_USERS } from '../../data/mockData';
 import type { Role, SupportedLanguage } from '../../types';
 
 export const Header: React.FC = () => {
+  const navigate = useNavigate();
   const { currentUser, setCurrentUser, activeJob } = useInspection();
   const { language, setLanguage, t } = useLanguage();
   const { theme, toggleTheme } = useTheme();
@@ -52,6 +54,9 @@ export const Header: React.FC = () => {
     const targetUser = MOCK_USERS.find((u) => u.role === role) || MOCK_USERS[0];
     setCurrentUser(targetUser);
     setIsRoleDropdownOpen(false);
+    if (role === 'operator') navigate('/operator');
+    else if (role === 'supervisor') navigate('/supervisor');
+    else if (role === 'owner') navigate('/owner');
   };
 
   const getRoleBadgeColor = (role: Role) => {

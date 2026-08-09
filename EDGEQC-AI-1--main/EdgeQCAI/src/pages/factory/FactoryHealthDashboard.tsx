@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+﻿import React, { useEffect, useState } from 'react';
+import { apiUrl } from '../../lib/api';
 import { motion } from 'framer-motion';
 import { Activity, Cpu, TrendingUp, MessageCircle, BarChart2, Layers } from 'lucide-react';
 import { ResponsiveContainer, AreaChart, Area, XAxis, YAxis, Tooltip, CartesianGrid } from 'recharts';
@@ -18,10 +19,10 @@ const weeklyData = [
   { day: 'Sun', passRate: 98.6, defectCount: 14 }
 ];
 
-const machines = [
-  { id: 'm1', name: 'Machine 1 (Line 1)', status: 'running', temp: '42°C', vibration: '0.8 mm/s', ppm: 1450, defectRate: '1.2%', health: 98 },
-  { id: 'm2', name: 'Machine 2 (Line 3)', status: 'warning', temp: '54°C', vibration: '2.4 mm/s', ppm: 1320, defectRate: '3.8%', health: 84 },
-  { id: 'm3', name: 'Machine 3 (Line 2)', status: 'running', temp: '48°C', vibration: '1.2 mm/s', ppm: 1400, defectRate: '2.1%', health: 92 }
+const fallbackMachines = [
+  { id: 'm1', name: 'Machine 1 (Line 1)', status: 'running', temp: '42Â°C', vibration: '0.8 mm/s', ppm: 1450, defectRate: '1.2%', health: 98 },
+  { id: 'm2', name: 'Machine 2 (Line 3)', status: 'warning', temp: '54Â°C', vibration: '2.4 mm/s', ppm: 1320, defectRate: '3.8%', health: 84 },
+  { id: 'm3', name: 'Machine 3 (Line 2)', status: 'running', temp: '48Â°C', vibration: '1.2 mm/s', ppm: 1400, defectRate: '2.1%', health: 92 }
 ];
 
 const defectHeatmap = [
@@ -34,8 +35,31 @@ export const FactoryHealthDashboard: React.FC = () => {
   const { t } = useLanguage();
   const [showWhatsAppModal, setShowWhatsAppModal] = useState(false);
   const [activeFlashcardId, setActiveFlashcardId] = useState<string | null>(null);
+  const [overallHealthScore, setOverallHealthScore] = useState(94);
+  const [machines, setMachines] = useState(fallbackMachines);
 
-  const overallHealthScore = 94;
+  useEffect(() => {
+    fetch(apiUrl('/api/factory-health'))
+      .then((res) => res.json())
+      .then((data) => {
+        if (!data) return;
+        setOverallHealthScore(data.healthScore ?? 94);
+        if (Array.isArray(data.machines) && data.machines.length > 0) {
+          setMachines(data.machines.map((machine: any, index: number) => ({
+            ...fallbackMachines[index % fallbackMachines.length],
+            id: machine.id,
+            name: machine.name,
+            status: machine.status,
+            defectRate: machine.defectRate,
+            ppm: data.overallThroughputPpm
+              ? Math.round(data.overallThroughputPpm / data.machines.length)
+              : fallbackMachines[index % fallbackMachines.length].ppm,
+            health: data.healthScore ?? fallbackMachines[index % fallbackMachines.length].health,
+          })));
+        }
+      })
+      .catch((err) => console.log('Could not load factory health from backend:', err));
+  }, []);
 
   return (
     <div className="space-y-6 pb-12">
@@ -246,3 +270,4 @@ export const FactoryHealthDashboard: React.FC = () => {
     </div>
   );
 };
+

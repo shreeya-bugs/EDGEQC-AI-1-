@@ -1,4 +1,5 @@
-import React, { useState, useRef, useEffect } from 'react';
+﻿import React, { useState, useRef, useEffect } from 'react';
+import { apiUrl } from '../../lib/api';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Send, Mic, MicOff, Sparkles, Bot, User, Volume2, Layers } from 'lucide-react';
 import { useVoice } from '../../context/VoiceContext';
@@ -69,7 +70,7 @@ export const AICopilot: React.FC = () => {
 
     try {
       // Send to FastAPI backend endpoint `/api/chat`
-      const response = await fetch('http://localhost:8000/api/chat', {
+      const response = await fetch(apiUrl('/api/chat'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -108,16 +109,16 @@ export const AICopilot: React.FC = () => {
           walkthroughId = 'surface_scratch';
           flashcardId = 'surface_scratch';
         } else if (lower.includes('how do i fix') || lower.includes('fix')) {
-          reply = '**Recommended Fix Procedure:**\n1. Stop Line 2 conveyor bed.\n2. Swap the ceramic bearing sleeve on Roller #3.\n3. Wipe guide tracks with isopropyl alcohol.\n4. Re-torque flange bolt to **15 Nm**.\n\n*Estimated Repair Time: 15 Mins | Production Loss Saved: ₹12,500*';
+          reply = '**Recommended Fix Procedure:**\n1. Stop Line 2 conveyor bed.\n2. Swap the ceramic bearing sleeve on Roller #3.\n3. Wipe guide tracks with isopropyl alcohol.\n4. Re-torque flange bolt to **15 Nm**.\n\n*Estimated Repair Time: 15 Mins | Production Loss Saved: â‚¹12,500*';
           walkthroughId = 'surface_scratch';
           flashcardId = 'surface_scratch';
         } else if (lower.includes('highest defect rate') || lower.includes('which machine')) {
           reply = '**Factory Telematics Breakdown:**\n- **Machine 3 (Line 2)** has the highest defect rate today at **4.8%** (18 defects total).\n- **Top Defect:** Surface Scratch (12 occurrences).\n- **Machine 1 (Line 1):** 1.2% defect rate (Normal).\n- **Machine 2 (Line 3):** 2.1% defect rate (Warning - vibration drift).';
           walkthroughId = 'misalignment';
         } else if (lower.includes('summarize today') || lower.includes('summarize')) {
-          reply = "📊 **Today's Inspection Summary:**\n- **Total Inspected:** 1,248 Units\n- **PASS Rate:** 96.2% (1,201 Passed)\n- **FAIL Count:** 47 Units\n- **Top Issues:** Surface Scratch (52%), Package Misalignment (30%), Ink Smudge (18%).\n- **Overall Factory Health Score:** 94/100 (Optimal).";
+          reply = "ðŸ“Š **Today's Inspection Summary:**\n- **Total Inspected:** 1,248 Units\n- **PASS Rate:** 96.2% (1,201 Passed)\n- **FAIL Count:** 47 Units\n- **Top Issues:** Surface Scratch (52%), Package Misalignment (30%), Ink Smudge (18%).\n- **Overall Factory Health Score:** 94/100 (Optimal).";
         } else if (lower.includes('critical')) {
-          reply = '⚠️ **Defect Criticality Level: HIGH**\nSurface scratches on optical packaging exceed consumer tolerances and can result in line shutdown if defect count exceeds 25 units per hour.';
+          reply = 'âš ï¸ **Defect Criticality Level: HIGH**\nSurface scratches on optical packaging exceed consumer tolerances and can result in line shutdown if defect count exceeds 25 units per hour.';
           flashcardId = 'surface_scratch';
         } else {
           reply = `I have processed your query: "*${textToSend}*"\n\nBased on real-time YOLOv8 optical telemetry, all line sensors are operating normally. Let me know if you need a step-by-step visual walkthrough or a defect flashcard.`;
@@ -344,3 +345,4 @@ export const AICopilot: React.FC = () => {
     </>
   );
 };
+

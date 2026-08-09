@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+﻿import React, { createContext, useContext, useState, useEffect } from 'react';
+import { apiUrl } from '../lib/api';
 import type {
   User,
   Role,
@@ -128,7 +129,9 @@ export const InspectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   );
 
   useEffect(() => {
-    setCurrentLiveResult(buildLiveRecord(currentMockState));
+    if (!currentLiveResult?.annotatedImageBase64) {
+      setCurrentLiveResult(buildLiveRecord(currentMockState));
+    }
   }, [currentMockState, activeJob]);
 
   const setRole = (newRole: Role) => {
@@ -230,7 +233,7 @@ export const InspectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const [isAnalyzing, setIsAnalyzing] = useState<boolean>(false);
 
   useEffect(() => {
-    fetch('http://localhost:8000/api/dataset-samples')
+    fetch(apiUrl('/api/dataset-samples'))
       .then((res) => res.json())
       .then((data) => {
         if (data && data.samples) {
@@ -297,7 +300,7 @@ export const InspectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
       const formData = new FormData();
       formData.append('file', file);
 
-      const response = await fetch('http://localhost:8000/api/inspect', {
+      const response = await fetch(apiUrl('/api/inspect'), {
         method: 'POST',
         body: formData,
       });
@@ -319,7 +322,7 @@ export const InspectionProvider: React.FC<{ children: React.ReactNode }> = ({ ch
   const inspectBase64Image = async (dataUrl: string, filename: string = 'sample.jpg'): Promise<InspectionRecord> => {
     setIsAnalyzing(true);
     try {
-      const response = await fetch('http://localhost:8000/api/inspect/base64', {
+      const response = await fetch(apiUrl('/api/inspect/base64'), {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ image_base64: dataUrl, filename }),
@@ -403,3 +406,4 @@ export const useInspection = () => {
   }
   return context;
 };
+
